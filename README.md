@@ -48,6 +48,8 @@ You can use common scheduling solutions such as cron or airflow to implement the
 
 Note: Please submit the processed dataset and scripts used
 
+---
+
 ## Section 2: Databases
 
 You are appointed by the above e-commerce company to create a database infrastructure for their sales transactions. Purchases are being made by members of the e-commerce company on their website (you may use the first 50 members of a processed dataset from Section 1). Members can make multiple purchases. 
@@ -69,3 +71,20 @@ Set up a PostgreSQL database using the docker image provided. We expece at least
 Analysts from the e-commerce company will need to query some information from the database. Below are 2 of the sameple queries from the analysts. Do note to design your database to account for a wide range of business use cases and queries. 
 1. Which are the top 10 members by spending
 2. Which are the top 3 items that are frequently brought by members
+
+---
+
+## Section 3: Data Pipelines
+
+You are designing data infrastructure on the cloud for a company whose main business is in processing images.
+
+The company has a web application which allows users to upload images to the cloud using an API. There is also a separate web application which hosts a Kafka stream that uploads images to the same cloud environment. This Kafka stream has to be managed by the company's engineers.
+
+Code has already been written by the company's software engineers to process the images. This code has to be hosted on the cloud. For archival purposes, the images and its metadata has to be stored in the cloud environment for 7 days, after which it has to be purged from the environment for compliance and privacy. The cloud environment should also host a Business Intelligence resource where the company's analysts can access and perform analytical computation on the data stored.
+
+As a data engineer within the company, you are required to produce a system architecture diagram (Visio, PowerPoint, draw.io) depicting the end-to-end flow of the aforementioned pipeline. You may use any of the cloud providers (e.g. AWS, Azure, GCP) to host the environment. The architecture should specifically address the requirements/concerns above.
+
+Do indicate any assumptions you have made regarding the architecture. You are required to provide a detailed explanation on the diagram.
+
+---
+## Sectopm 4: Charts & APIs
