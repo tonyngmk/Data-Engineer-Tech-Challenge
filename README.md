@@ -26,6 +26,8 @@ Donts:
 - Sparse or absent documentation
 - Code which is hard to read
 
+---
+
 ## Section 1: Data Pipelines
 
 An e-commerce company requires that users sign up for a membership on the website in order to purchase a product from the platform. As a data engineer under this company, you are tasked with designing and implementing a pipeline to process the membership applications submitted by users on an hourly interval. 
@@ -66,9 +68,10 @@ Each transaction made by a member contains the following information:
 - Total items price
 - Total items weight
 
-Set up a PostgreSQL database using the docker image provided. We expece at least a Dockerfile which will stand up your database with the DDL statements to create the necessary tables. You are required to produce  entity-relationship diagrams as necessary to illustrate your design. 
+Set up a PostgreSQL database using the Docker [image](https://hub.docker.com/_/postgres) provided. We expece at least a Dockerfile which will stand up your database with the DDL statements to create the necessary tables. You are required to produce  entity-relationship diagrams as necessary to illustrate your design. 
 
 Analysts from the e-commerce company will need to query some information from the database. Below are 2 of the sameple queries from the analysts. Do note to design your database to account for a wide range of business use cases and queries. 
+You are tasked to write a SQL statement for each of the following task:
 1. Which are the top 10 members by spending
 2. Which are the top 3 items that are frequently brought by members
 
