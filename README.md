@@ -50,7 +50,7 @@ Note: Please submit the processed dataset and scripts used
 
 ## Section 2: Databases
 
-You are appointed by the above e-commerce company to create a database infeastructure for their sales transactions. Purcases are being made by members of the e-commerce company on their website (you may use the first 50 members of a processed dataset from Section 1). Members can make multiple purchases. 
+You are appointed by the above e-commerce company to create a database infrastructure for their sales transactions. Purchases are being made by members of the e-commerce company on their website (you may use the first 50 members of a processed dataset from Section 1). Members can make multiple purchases. 
 
 The following are known for each item listed for sale on the e-commerce website:
 - Item Name
@@ -60,7 +60,7 @@ The following are known for each item listed for sale on the e-commerce website:
 
 Each transaction made by a member contains the following information:
 - Membership ID
-- Items bought
+- Items bought (could be one item or multiple items)
 - Total items price
 - Total items weight
 
