@@ -26,79 +26,87 @@ Donts:
 - Sparse or absent documentation
 - Code which is hard to read
 
+---
+
 ## Section 1: Data Pipelines
 
-The objective of this section is to design and implement a solution to process a data file on a regular interval (e.g. daily). Assume that there are 2 data files `dataset1.csv` and `dataset2.csv`, design a solution to process these files, along with the scheduling component. The expected output of the processing task is a CSV file including a header containing the field names.
+An e-commerce company requires that users sign up for a membership on the website in order to purchase a product from the platform. As a data engineer under this company, you are tasked with designing and implementing a pipeline to process the membership applications submitted by users on an hourly interval. 
 
-You can use common scheduling solutions such as `cron` or `airflow` to implement the scheduling component. You may assume that the data file will be available at 1am everyday. Please provide documentation (a markdown file will help) to explain your solution.
+Applications are batched into a varying number of datasets and dropped into a folder on an hourly basis. You are required to set up a pipeline to ingest, clean, perform validity checks, and create membership IDs for successful applications. An application is successful if:
+- Application mobile number is 8 digits
+- Applicant is over 18 years old as of 1 Jan 2022
+- Applicant has a valid email (email ends with @emailprovider.com or @emailprovider.net)
 
-Processing tasks:
+You are required to format datasets in the following manner:
+- Split name into first_name and last_name
+- Format birthday field into YYYYMMDD
+- Remove any rows which do not have a name field (treat this as unsuccessful applications)
+- Create a new field named above_18 based on the applicant's birthday
+- Membership IDs for successful applications should be the user's last name, followed by a SHA256 hash of the applicant's birthday, truncated to first 5 digits of hash (i.e <last_name>_<hash(YYYYMMDD)>)
 
-- Split the `name` field into `first_name`, and `last_name`
-- Remove any zeros prepended to the `price` field
-- Delete any rows which do not have a `name`
-- Create a new field named `above_100`, which is `true` if the price is strictly greater than 100
+You are required to consolidate these datasets and output the successful applications into a folder, which will be picked up by downstream engineers. Unsuccessful applications should be condolidated and dropped into a separate folder.
 
-_Note: please submit the processed dataset too._
+You can use common scheduling solutions such as cron or airflow to implement the scheduling component. Please provide a markdown file as documentation. 
+
+Note: Please submit the processed dataset and scripts used
+
+---
 
 ## Section 2: Databases
 
-You are appointed by a car dealership to create their database infrastructure. There is only one store. In each business day, cars are being sold by a team of salespersons. Each transaction would contain information on the date and time of transaction, customer transacted with, and the car that was sold.
+You are appointed by the above e-commerce company to create a database infrastructure for their sales transactions. Purchases are being made by members of the e-commerce company on their website (you may use the first 50 members of a processed dataset from Section 1). Members can make multiple purchases. 
 
-The following are known:
+The following are known for each item listed for sale on the e-commerce website:
+- Item Name
+- Manufacturer Name
+- Cost
+- Weight (in kg)
 
-- Each car can only be sold by one salesperson.
-- There are multiple manufacturers’ cars sold.
-- Each car has the following characteristics:
-- Manufacturer
-- Model name
-- Serial number
-- Weight
-- Price
+Each transaction made by a member contains the following information:
+- Membership ID
+- Items bought (could be one item or multiple items)
+- Total items price
+- Total items weight
 
-Each sale transaction contains the following information:
+Set up a PostgreSQL database using the Docker [image](https://hub.docker.com/_/postgres) provided. We expece at least a Dockerfile which will stand up your database with the DDL statements to create the necessary tables. You are required to produce  entity-relationship diagrams as necessary to illustrate your design. 
 
-- Customer Name
-- Customer Phone
-- Salesperson
-- Characteristics of car sold
+Analysts from the e-commerce company will need to query some information from the database. Below are 2 of the sameple queries from the analysts. Do note to design your database to account for a wide range of business use cases and queries. 
+You are tasked to write a SQL statement for each of the following task:
+1. Which are the top 10 members by spending
+2. Which are the top 3 items that are frequently brought by members
 
-Set up a PostgreSQL database using the base `docker` image [here](https://hub.docker.com/_/postgres) given the above. We expect at least a `Dockerfile` which will stand up your database with the DDL statements to create the necessary tables. Produce entity-relationship diagrams as necessary to illustrate your design.
+---
 
-Your team also needs you to query some information from the database that you have designed. Note that the business requirements for the database is **not limited** to the 2 queries below, do design your database to account a wide range of business use cases. You are tasked to write a `sql` statement for each of the following task:
+## Section 3: Data Pipelines
 
-1. I want to know the list of our customers and their spending.
+You are designing data infrastructure on the cloud for a company whose main business is in processing images.
 
-2. I want to find out the top 3 car manufacturers that customers bought by sales (quantity) and the sales number for it in the current month.
+The company has a web application which allows users to upload images to the cloud using an API. There is also a separate web application which hosts a Kafka stream that uploads images to the same cloud environment. This Kafka stream has to be managed by the company's engineers.
 
-## Section 3: System Design
+Code has already been written by the company's software engineers to process the images. This code has to be hosted on the cloud. For archival purposes, the images and its metadata has to be stored in the cloud environment for 7 days, after which it has to be purged from the environment for compliance and privacy. The cloud environment should also host a Business Intelligence resource where the company's analysts can access and perform analytical computation on the data stored.
 
-Prepare a presentation to your project team on how you plan to design data infrastructure on the cloud for a company whose main business is in processing images. Your role is the `Tech Lead` for this project.
+As a data engineer within the company, you are required to produce a system architecture diagram (Visio, PowerPoint, draw.io) depicting the end-to-end flow of the aforementioned pipeline. You may use any of the cloud providers (e.g. AWS, Azure, GCP) to host the environment. The architecture should specifically address the requirements/concerns above.
 
-The company has a web application which collects images uploaded by customers. The company also has a separate web application which provides a stream of images using a Kafka stream. The company’s software engineers have already some code written to process the images.
+Do indicate any assumptions you have made regarding the architecture. You are required to provide a detailed explanation on the diagram.
 
-The company would like to save processed images for a minimum of **7 days for archival purposes**. Ideally, the company would also want to be able to have some Business Intelligence (BI) on key statistics including number and type of images processed, and by which customers.
-
-Produce a system architecture diagram (e.g. Visio, Powerpoint) using any of the commercial cloud providers' ecosystem to explain your design. Please also indicate clearly if you have made any assumptions at any point.
-
-Share about the `pros` and `cons` of your design to justify the decisions you have made.
-
-## Section 4: Charts and APIs
-
+---
+## Section 4: Charts & APIs
 Your team decided to design a dashboard to display the statistic of COVID19 cases. You are tasked to display one of the components of the dashboard which is to display a visualisation representation of number of COVID19 cases in Singapore over time.
 
 Your team decided to use the public data from https://documenter.getpostman.com/view/10808728/SzS8rjbc#b07f97ba-24f4-4ebe-ad71-97fa35f3b683.
 
 Display a graph to show the number cases in Singapore over time using the APIs from https://covid19api.com/.
 
-_Note: please submit screenshots of the dashboard_
+Note: please submit screenshots of the dashboard
+
+---
+
 
 ## Section 5: Machine Learning
-
 Using the dataset from https://archive.ics.uci.edu/ml/datasets/Car+Evaluation, create a machine learning model to predict the buying price given the following parameters:
 
-- Maintenance = High
-- Number of doors = 4
-- Lug Boot Size = Big
-- Safety = High
-- Class Value = Good
+Maintenance = High <br>
+Number of doors = 4 <br>
+Lug Boot Size = Big <br>
+Safety = High <br>
+Class Value = Good <br>
