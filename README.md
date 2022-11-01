@@ -77,7 +77,7 @@ You are tasked to write a SQL statement for each of the following task:
 
 ---
 
-## Section 3: Data Pipelines
+## Section 3: System Design
 
 You are designing data infrastructure on the cloud for a company whose main business is in processing images.
 
