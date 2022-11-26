@@ -24,32 +24,42 @@ from datetime import timedelta
 from airflow import DAG
 from airflow.decorators import task
 from airflow.operators.bash import BashOperator
+from airflow.operators.python_operator import PythonOperator
 from airflow.operators.dummy import DummyOperator
 from airflow.utils.dates import days_ago
+
+import process_applications
 
 args = {
     'owner': 'airflow',
 }
 
 with DAG(
-    dag_id='a_process_applications',
+    dag_id='process-applications-hourly-v1',
     default_args=args,
-    schedule_interval='0 0 * * *',
+    schedule_interval='0 * * * *', # hourly
+    tags=['application', 'hourly'],
     start_date=days_ago(2),
-    dagrun_timeout=timedelta(minutes=60),
-    tags=['example', 'example2'],
-    params={"example_key": "example_value"},
+    dagrun_timeout=timedelta(minutes=5),
+    # params={"example_key": "example_value"},
 ) as dag:
+    
+    logging.info(f"Triggered DAG at {datetime.datetime.now().strftime('%Y-%m-%d-%H')}")
 
     run_this_last = DummyOperator(
         task_id='run_this_last',
     )
 
     # [START howto_operator_bash]
-    run_this = BashOperator(
-        task_id='run_after_loop',
-        bash_command='echo 1',
-    )
+    # run_this = BashOperator(
+    #     task_id='run_after_loop',
+    #     bash_command='echo 1',
+    # )
+
+    run_this = PythonOperator(task_id='read_file',
+    python_callable=src.process_applications.read("/Users/tonyngmk/repo/Data-Engineer-Tech-Challenge/1-data-pipelines/data/input"), dag=dag)
+
+
     # [END howto_operator_bash]
 
     run_this >> run_this_last
