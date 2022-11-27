@@ -1,7 +1,7 @@
 # Charts and API
 
 The COVID-19 dashboard which queries from is hosted at the following Streamlit site:
-https://tonyngmk-data-engineer-tech-challenge-app-feat-4-chart-a-ftprpk.streamlit.app/
+https://tonyngmk-data-engineer-tech-challenge-4-charts-apiapp-vde1c9.streamlit.app/
 
 ## Examples
 | Sample of dashboard interface
