@@ -69,13 +69,24 @@ if st.checkbox('Show raw data', key='4'):
     st.subheader('Raw data')
     st.write(data_asia)
 
-if st.checkbox('Show summarised data', key='5'):
-    st.subheader('Summarised data')
-    st.write(data_asia.groupby(['Country', 'lat', 'lon']).sum().reset_index())
+
 
 # Map
 data_asia['Date'] = data_asia['Date'].astype('str').str[:10]
 day_to_filter = st.slider('day', 0, 30, 14, key='6')
 data_asia_map_plot = data_asia[data_asia['Date'] == ((datetime.datetime.today() - datetime.timedelta(days=30)) + datetime.timedelta(days=day_to_filter)).strftime('%Y-%m-%d')]
+# st.write(data_asia_map_plot)
+
+# if st.checkbox('Show summarised data', key='5'):
+st.subheader('Summarised data')
+st.write(data_asia_map_plot[['Date', 'Country', 'Cases']].reset_index(drop=True))
+# st.area_chart(data_asia, x='Date', y='Cases')
+
 st.subheader('Map of cases in Asia')
 st.map(data_asia_map_plot)
+
+# st.subheader(f'Singapore Country Confirmed Cases')
+# data_asia['Date'] = data_asia['Date'].astype('str').str[:10]
+# day_to_filter = st.slider('day', 0, 30, 14, key='7')
+# data_asia_map_plot = data_asia[data_asia['Date'] == ((datetime.datetime.today() - datetime.timedelta(days=30)) + datetime.timedelta(days=day_to_filter)).strftime('%Y-%m-%d')]
+
