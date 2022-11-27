@@ -52,3 +52,9 @@ erDiagram
         real       weight_kg
     }
 ```
+
+## Docker image of Database
+
+The following database is hosted on Docker Hub:
+
+https://hub.docker.com/repository/docker/tonyngmk/de-challenge-database
