@@ -1,6 +1,6 @@
 # Data Pipelines
 
-The following lists the steps taken to create the Data Pipeline using Airflow.
+The following lists the steps taken to create the Data Pipeline using Cron.
 
 ## Installation 
 ### Spark
